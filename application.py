@@ -32,10 +32,6 @@ colors = {
 }
 app.layout = html.Div([
     
-    html.Div([
-        html.Iframe(src='https://chart-studio.plot.ly/~hamiri/6.embed')
-    ]),
-
     html.Div(
 
     [
@@ -54,6 +50,10 @@ app.layout = html.Div([
             ])
             ]),
         html.Div(id='tabs-content')
+    ]),
+
+    html.Div([
+        html.Iframe(src='https://chart-studio.plot.ly/~hamiri/6.embed', width='1000', height='1000')
     ])
     ])
 
