@@ -30,7 +30,14 @@ colors = {
     'background': '#FFFFFF',
     'text': '#000000'
 }
-app.layout = html.Div(
+app.layout = html.Div([
+    
+    html.Div([
+        html.Iframe(src='https://chart-studio.plot.ly/~hamiri/6.embed')
+    ]),
+
+    html.Div(
+
     [
         html.H1(
         children='Win Distributions in Serie A by year',
@@ -47,6 +54,7 @@ app.layout = html.Div(
             ])
             ]),
         html.Div(id='tabs-content')
+    ])
     ])
 
 @app.callback(Output('tabs-content', 'children'),
