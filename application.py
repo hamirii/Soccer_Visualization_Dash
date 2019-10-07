@@ -52,9 +52,9 @@ app.layout = html.Div([
         html.Div(id='tabs-content')
     ]),
 
-    html.Div([
-        html.Iframe(src='https://chart-studio.plot.ly/~hamiri/6.embed', width='1000', height='1000')
-    ])
+    #html.Div([
+     #   html.Iframe(width='500', height='500', src='https://chart-studio.plot.ly/~hamiri/6.embed')
+    #])
     ])
 
 @app.callback(Output('tabs-content', 'children'),
