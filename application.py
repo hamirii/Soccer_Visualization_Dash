@@ -26,25 +26,9 @@ pieData17 = [yData2[0], yData2[1], yData2[2]]
 pieData18 = [yData3[0], yData3[1], yData3[2]]
 catLabels = ['Home wins', 'Away wins', 'Draws']
 
-labels = ["US", "China", "European Union", "Russian Federation", "Brazil", "India", 
-          "Rest of World"]
-
-# Create subplots: use 'domain' type for Pie subplot
-fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
-fig.add_trace(go.Pie(labels=labels, values=[16, 15, 12, 6, 5, 4, 42], name="GHG Emissions"),
-              1, 1)
-fig.add_trace(go.Pie(labels=labels, values=[27, 11, 25, 8, 1, 3, 25], name="CO2 Emissions"),
-              1, 2)
-
-# Use `hole` to create a donut-like pie chart
-fig.update_traces(hole=.4, hoverinfo="label+percent+name")
-
-fig.layout.update(
-    title_text="Global Emissions 1990-2011",
-    # Add annotations in the center of the donut pies.
-    annotations=[dict(text='GHG', x=0.18, y=0.5, font_size=20, showarrow=False),
-                 dict(text='CO2', x=0.82, y=0.5, font_size=20, showarrow=False)])
-fig.show()
+df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_ebola.csv')
+df = df.dropna(axis=0)
+dff = pd.read_csv('serieA/saa.csv')
 
 
 app = dash.Dash(__name__)
@@ -78,9 +62,9 @@ app.layout = html.Div([
             html.Div(id='tabs-content')
         ]),
 
-    html.Div([
+    #html.Div([
 
-        html.Iframe(src= "https://chart-studio.plot.ly/~hamiri/6.embed", style={'width': '100%', 'height':'650px', 'border':'none'})# , style="border:none")
+        #html.Iframe(src= "https://chart-studio.plot.ly/~hamiri/6.embed", style={'width': '100%', 'height':'650px', 'border':'none'})# , style="border:none")
 
         #dt.DataTable(
 
@@ -90,15 +74,30 @@ app.layout = html.Div([
         #)
 
 
-    ])
+    #]),
+
+    html.Div([
+
+        html.Div([html.H1("Win distribution by Season")], style={"textAlign": "center"}),
+            dcc.Graph(id="my-graph"),
+            html.Div([dcc.Slider(id='season', min=1, max=4, value=3,
+                                marks={1: "2015/16", 2: "2016/17", 3: "2017/18", 4: "2018/19"})],
+                    style={'textAlign': "center", "margin": "30px", "padding": "10px", "width": "65%", "margin-left": "auto",
+                            "margin-right": "auto"}),
+        ], className="container")
+    
 
     #html.Div([
      #   html.Iframe(width='500', height='500', src='https://chart-studio.plot.ly/~hamiri/6.embed')
     #])
 ])
 
-@app.callback(Output('tabs-content', 'children'),
-              [Input('tabs', 'value')])
+
+@app.callback(
+    
+     Output('tabs-content', 'children'),
+     [Input('tabs', 'value')])              
+
 def render_content(tab):
 
     if tab == 'tab-1':
@@ -173,6 +172,22 @@ def render_content(tab):
                             }
                             )], style={'width':'100%','display':'inline-block', 'font-family':'Georgia'})
             ])
+
+@app.callback(
+     Output("my-graph", "figure"),
+     [Input("season", "value")]
+ )
+
+
+def update_graph(selected):
+    return {
+        "data": [go.Pie(labels=dff["Team"].unique().tolist(), values=dff[dff["Season"] == selected]["W"].tolist(),
+                        marker={'colors': ['#EF963B', '#C93277', '#349600', '#EF533B', '#57D4F1']}, textinfo='label')],
+       "layout": go.Layout(title="Win Distribution by Season", margin={"l": 300, "r": 300, },
+                            legend={"x": 1, "y": 0.7})}
+
+
+    
     
 application = app.server
 
