@@ -1,35 +1,39 @@
 import _plotly_future_
 from _plotly_future_ import v4_subplots
+
+# Import Dash and Plotly components/packages
+
 import dash
 import dash_html_components as html
-from winRecords import winRecords
-import pandas as pd
 import dash_core_components as dcc
 import plotly
 from dash.dependencies import Input, Output, State
-import numpy as np
 import dash_table as dt
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
-from winRecords import winRecords
-from winRecords import binaryFTR
+# Importing custom function winRecords and binaryFTR
 
-tabdata = pd.read_csv("serieA/serieA_season-1819.csv")
-resD = binaryFTR(pd.read_csv("serieA/serieA_season-1819.csv"), 'FTR')
+from winRecords import winRecords, binaryFTR
+import pandas as pd
+import numpy as np
+
+# Read Files into appropriate data type - i.e. dataFrame or array, list, dict, etc.
+
+tabdata = pd.read_csv("serieA/serieA_season-1819.csv") #DataFrame
+resD = binaryFTR(pd.read_csv("serieA/serieA_season-1819.csv"), 'FTR') #
 yData1 = (winRecords(pd.read_csv("serieA/serieA_season-1617.csv"), 'SerieA_16_17', 'FTR'))
 yData2 = (winRecords(pd.read_csv("serieA/serieA_season-1718.csv"), 'SerieA_17_18', 'FTR'))
 yData3 = (winRecords(pd.read_csv("serieA/serieA_season-1819.csv"), 'SerieA_18_19', 'FTR'))
-#xData = np.arange(len(yData[0]))
 seasonsLabels = ['2016/17', '2017/18', '2018/19']
 pieData17 = [yData2[0], yData2[1], yData2[2]]
 pieData18 = [yData3[0], yData3[1], yData3[2]]
 catLabels = ['Home wins', 'Away wins', 'Draws']
 
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_ebola.csv')
-df = df.dropna(axis=0)
+# Dataset for Pie chart (slider)
 dff = pd.read_csv('serieA/saa.csv')
 
+# Building the Dash app
 
 app = dash.Dash(__name__)
 app.title = 'Serie A Stats Dashboard'
@@ -65,8 +69,6 @@ app.layout = html.Div([
 
     #html.Div([
 
-        #html.Iframe(src= "https://chart-studio.plot.ly/~hamiri/6.embed", style={'width': '100%', 'height':'650px', 'border':'none'})# , style="border:none")
-
         #dt.DataTable(
 
          #   id='table',
@@ -88,9 +90,6 @@ app.layout = html.Div([
         ], className="container")
     
 
-    #html.Div([
-     #   html.Iframe(width='500', height='500', src='https://chart-studio.plot.ly/~hamiri/6.embed')
-    #])
 ])
 
 
