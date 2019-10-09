@@ -2,4 +2,4 @@ pandas==0.24.2
 dash-daq==0.1.0
 Dash==0.39.0
 plotly==4.0.0
-gunicorn==19.0.0
+gunicorn==19.5.0
