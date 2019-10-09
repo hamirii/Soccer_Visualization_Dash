@@ -32,6 +32,7 @@ dff = pd.read_csv('serieA/saa.csv')
 
 
 app = dash.Dash(__name__)
+app.title = 'Serie A Stats Dashboard'
 
 app.scripts.config.serve_locally = True
 app.css.config.serve_locally = True
