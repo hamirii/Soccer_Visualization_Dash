@@ -11,9 +11,7 @@ from dash.dependencies import Input, Output, State
 import dash_table as dt
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-#import HomeGameAdvantage_Soccer
-from HomeGameAdvantage_Soccer import modelPred, modelTrain
-#import HomeGameAdvantage_Soccer
+
 
 
 # Importing custom function winRecords and binaryFTR
@@ -157,10 +155,8 @@ page_2_layout = html.Div([
               [State('input', 'value')])
 def callback(n_clicks, state):
     arrayN = np.array(state.split(","))
-    modelA = modelTrain(pd.read_csv("serieeA_season-1718_1819.csv"))
-    resul = modelPred(arrayN, modelA)
 
-    return "For your Machine learning test, please enter IN THIS ORDER (separated by commas), Home Team name, Away Team Name, Home Shots, Away Shots,Home Shots on Target, Away Shots on Target, Home Fouls, Away Fouls, Home Corners, Away Corners, Home Yellow Cards, Away Yellow Cards, Home Red Cards, Away Red Cards: {}".format(resul)
+    return "For your Machine learning test, please enter IN THIS ORDER (separated by commas), Home Team name, Away Team Name, Home Shots, Away Shots,Home Shots on Target, Away Shots on Target, Home Fouls, Away Fouls, Home Corners, Away Corners, Home Yellow Cards, Away Yellow Cards, Home Red Cards, Away Red Cards: {}".format(arrayN)
 
 @app.callback(dash.dependencies.Output('page-2-content', 'children'),
               [dash.dependencies.Input('page-2-radios', 'value')])
