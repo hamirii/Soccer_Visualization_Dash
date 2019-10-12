@@ -41,3 +41,33 @@ def binaryFTR(data, cat):
 
     #return leagueName, 'HomeWins: %s' % homeWins, 'Away Wins: %s' % awayWins, 'Draws: %s' % draws
     return ftr
+
+# Return original DataFrame
+def updateFTR(data, cat):
+    ftr = data[cat]
+
+    
+    for i in range(0, len(ftr.to_numpy())):
+
+        if (ftr.to_numpy()[i] == 'H'):
+            ftr.to_numpy()[i] = 0
+            #print(j)
+        elif (ftr.to_numpy()[i] == 'A'):
+            ftr.to_numpy()[i] = 1
+        else:
+            ftr.to_numpy()[i] = 2
+        #ftr.to_numpy()[len(ftr.to_numpy)] =
+
+    #return leagueName, 'HomeWins: %s' % homeWins, 'Away Wins: %s' % awayWins, 'Draws: %s' % draws
+    data['FTR'] = ftr.to_numpy()
+    return data
+    
+
+
+
+
+# Return Summary of fouls
+def sumFoul(data, cat):
+    sum = np.sum(data[cat])
+
+    return sum
